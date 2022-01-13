@@ -53,7 +53,8 @@ public class Starter extends JFrame {
                         .thenAccept(response -> {
                             JSONObject res = new JSONObject(response);
                             Object transactions = res.get("transactions");
-                            if (transactions instanceof JSONArray jsonArray) {
+                            if (transactions instanceof JSONArray) {
+                                JSONArray jsonArray = (JSONArray) transactions;
                                 for(int j = 0; j < jsonArray.length(); j++) {
                                     JSONObject object = jsonArray.getJSONObject(j);
                                     Object des = object.get("descriptions");
