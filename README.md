@@ -17,4 +17,4 @@ Customize how many months to look back and minimum point count.
 
 Hit the button, you should see results momentarily, might take a while if you look back a long time.
 
-
+![Screenshot](Screenshot.png)
