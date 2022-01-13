@@ -13,6 +13,8 @@ import java.util.Map;
 public class Starter extends JFrame {
     private JTextArea pasteFetchRequestOfTextArea;
     private JButton doItButton;
+    private JLabel label;
+    private JLabel label2;
     private JComboBox<Integer> comboBox1;
     private JComboBox<Integer> comboBox2;
     private JPanel panel;
@@ -69,12 +71,16 @@ public class Starter extends JFrame {
             }
 
             StringBuilder output = new StringBuilder();
+            Double grandTotal = 0.0;
             for (Map.Entry<String, Double> entry : map.entrySet()) {
+                if (entry.getValue() > 0 ) {
+                    grandTotal += entry.getValue();
+                }
                 if (entry.getValue() >= (int) comboBox2.getSelectedItem()) {
                     output.append(entry.toString()+ "\n");
                 }
             }
-            resultTextArea.setText(output.toString());
+            resultTextArea.setText("Grand Total: " + grandTotal + "\n" + output.toString());
         });
     }
 
