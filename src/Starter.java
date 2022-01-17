@@ -7,8 +7,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
 
 public class Starter extends JFrame {
     private JTextArea pasteFetchRequestOfTextArea;
@@ -43,7 +43,7 @@ public class Starter extends JFrame {
             }
             request.setHeader("cookie", pasteCookieHereTextArea.getText());
 
-            Map<String, Double> map = new HashMap<>();
+            TreeMap<String, Double> map = new TreeMap<>();
 
             for (int i = 0; i < comboBox1.getSelectedIndex(); i++) {
                 request.POST(HttpRequest.BodyPublishers.ofString(requestBody(jsonObject, i)));
@@ -71,17 +71,27 @@ public class Starter extends JFrame {
                         .join();
             }
 
+            List<Map.Entry<String, Double>> sorted = new ArrayList<>(map.entrySet());
+            sorted.sort((o1, o2) -> {
+                if (o1.getValue() - o2.getValue() > 0) {
+                    return -1;
+                } else if (o1.getValue() - o2.getValue() < 0) {
+                    return 1;
+                }
+                return 0;
+            });
+
             StringBuilder output = new StringBuilder();
-            Double grandTotal = 0.0;
-            for (Map.Entry<String, Double> entry : map.entrySet()) {
+            double grandTotal = 0.0;
+            for (Map.Entry<String, Double> entry : sorted) {
                 if (entry.getValue() > 0 ) {
                     grandTotal += entry.getValue();
                 }
                 if (entry.getValue() >= (int) comboBox2.getSelectedItem()) {
-                    output.append(entry.toString()+ "\n");
+                    output.append(entry+ "\n");
                 }
             }
-            resultTextArea.setText("Grand Total: " + grandTotal + "\n" + output.toString());
+            resultTextArea.setText("Grand Total: " + grandTotal + "\n" + output);
         });
     }
 
